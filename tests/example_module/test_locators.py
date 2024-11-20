@@ -1,4 +1,4 @@
-# pytest -s tests/example_module/test_locators.py::test_locate_by_title
+# pytest -s tests/example_module/test_locators.py::test_filter_by_has_not_child
 
 import re
 from playwright.sync_api import Page, expect
@@ -43,8 +43,96 @@ def test_locate_by_alt_text(page):
     # <img src="img/logos/Browsers.png" alt="Browsers (Chromium, Firefox, WebKit)"> 
     expect(page.get_by_alt_text("Browsers (Chromium, Firefox,")).to_be_visible()
     
+def close_dropdown(page):
+    page.locator("header").click()
+
+def test_locate_by_css(page):
+    page.goto("https://playwright.dev/")
+    
+    #<div class="navbar__item dropdown dropdown--hoverable">...</div>
+    
+    # Using Class Attribute
+    page.locator(".navbar__item.dropdown").click()
+    close_dropdown(page)
+    
+    # Using Attribute Selector
+    page.locator("[class*='navbar__item'][class*='dropdown']").click()
+    close_dropdown(page)
+    
+    # Using Combination of Tag and Class
+    page.locator("div.navbar__item.dropdown").click()
+    close_dropdown(page)
+    
+    # Using XPath
+    page.locator("//div[contains(@class, 'navbar__item') and contains(@class, 'dropdown')]").click()
+    close_dropdown(page)
+
+def test_filter_by_text(page):
+    page.goto("https://playwright.dev/python/docs/locators")
+    '''
+    <ul class="table-of-contents table-of-contents__left-border">
+        <li><a class="table-of-contents__link toc-highlight">Locating elements</a>
+            <ul>
+                <li><a class="table-of-contents__link toc-highlight">Locate by role</a></li>
+                <li><a class="table-of-contents__link toc-highlight">Locate by text</a></li>
+            </ul>
+        </li>
+    </ul>
+    '''
+    
+    # <li><a>Locating elements</a></li>
+    page.get_by_role("listitem").filter(has_text="Locating elements").click()
+    
+def test_filter_by_not_text(page):
+    page.goto("https://playwright.dev/python/docs/locators")
+    '''
+    <ul class="table-of-contents table-of-contents__left-border">
+        <li><a class="table-of-contents__link toc-highlight">Locating elements</a>
+            <ul>
+                <li><a class="table-of-contents__link toc-highlight">Locate by role</a></li>
+                <li><a class="table-of-contents__link toc-highlight">Locate by text</a></li>
+            </ul>
+        </li>
+    </ul>
+    '''
+    
+    # <li><a>Locating elements</a></li>
+    print(f'Count: {page.get_by_role("listitem").filter(has_not_text="Locating elements").count()}')
+    # Count: 122
 
 
-
-
+def test_filter_by_child(page):
+    page.goto("https://playwright.dev/python/docs/locators")
+    '''
+     <ul>
+       <li>
+           <a>Locating elements</a>
+       </li>
+     </ul>
+    '''
+    page.get_by_role("list").filter(has=page.get_by_role("listitem").filter(has_text="Locating elements")).click()
+    
+def test_filter_by_child_has_only_one(page):
+    page.goto("https://playwright.dev/python/docs/locators")
+    '''
+     <ul>
+       <li>
+           <a>Locating elements</a>
+       </li>
+     </ul>
+    '''
+    expect(page.get_by_role("list").filter(has=page.get_by_role("listitem").filter(has_text="Locating elements"))).to_have_count(1)
+    
+def test_filter_by_has_not_child(page):
+    page.goto("https://playwright.dev/python/docs/locators")
+    '''
+     <ul>
+       <li>
+           <a>Locating elements</a>
+       </li>
+     </ul>
+    '''
+    print(f'Count: {page.get_by_role("list").filter(has_not=page.get_by_role("listitem").filter(has_text="Locating elements")).count()}')
+    # Count: 23
+    
 
