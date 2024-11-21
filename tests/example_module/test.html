@@ -1,8 +1,71 @@
-<ul class="table-of-contents table-of-contents__left-border">
-    <li><a class="table-of-contents__link toc-highlight">Locating elements</a>
-        <ul>
-            <li><a class="table-of-contents__link toc-highlight">Locate by role</a></li>
-            <li><a class="table-of-contents__link toc-highlight">Locate by text</a></li>
-        </ul>
-    </li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+</head>
+<body>
+    <ul>
+        <li><a>Locating elements</a>
+            <ul>
+                <li><a>Locate by role</a></li>
+                <li><a>Locate by text</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="fruitlist">
+        <li class="fruit">apple</li>
+        <li class="fruit">banana</li>
+        <li class="fruit">orange</li>
+    </ul>
+
+    <button style="display: none;">Invisible</button>
+    <button>Visible</button>
+    <button title="Subscribe">Subscribe button</button>
+
+    <ul>
+        <li>
+            <div>John</div>
+            <div><button>Say hello</button></div>
+        </li>
+        <li>
+            <div>Mary</div>
+            <div><button>Say hello</button></div>
+        </li>
+        <li>
+            <div>John</div>
+            <div><button>Say hello</button></div>
+        </li>
+        <li>
+            <div>John</div>
+            <div><button>Say goodbye</button></div>
+        </li>
+        <li>
+            <div>Mary</div>
+            <div><button>Say goodbye</button></div>
+        </li>
+    </ul>
+
+    <input type="text" role="textbox" placeholder="role='textbox'">
+    <br>
+    <label for="date">Date</label>
+    <input type="date" id="date" placeholder="date">
+    <br>
+    <label for="time">Time</label>
+    <input type="time" id="time" placeholder="time">
+    <br>
+    <label for="datetime">Datetime</label>
+    <input type="datetime-local" id="datetime" placeholder="datetime">
+    <br>
+
+    <label for="checkbox">Checkbox One</label>
+    <input type="checkbox" id="checkbox">
+    <br>
+    <label for="checkboxtwo">Checkbox Two</label>
+    <input type="checkbox" id="checkboxtwo">
+    <br>
+    <label for="radio">Radio</label>
+    <input type="radio" id="radio">
+</body>

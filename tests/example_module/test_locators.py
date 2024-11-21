@@ -1,4 +1,4 @@
-# pytest -s tests/example_module/test_locators.py::test_filter_by_has_not_child
+# pytest -s tests/example_module/test_locators.py::test_trigger_action
 
 import re
 from playwright.sync_api import Page, expect
@@ -134,5 +134,17 @@ def test_filter_by_has_not_child(page):
     '''
     print(f'Count: {page.get_by_role("list").filter(has_not=page.get_by_role("listitem").filter(has_text="Locating elements")).count()}')
     # Count: 23
-    
+
+def test_chaining_filters(page):
+    page.goto("http://127.0.0.1:5501/opleiding-playwright-python/tests/example_module/test.html")
+    row_locator = page.get_by_role("listitem")
+    row_locator.filter(has_text="Mary").filter(has=page.get_by_role("button", name="Say goodbye")).click()
+
+def test_trigger_action(page):
+    page.goto("http://127.0.0.1:5501/opleiding-playwright-python/tests/example_module/test.html")
+    listitems = page.locator(".fruit")
+    count = listitems.count()
+    for i in range(count):
+        print(listitems.nth(i).text_content())
+        
 
