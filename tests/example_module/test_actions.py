@@ -1,4 +1,4 @@
-# pytest -s tests/example_module/test_actions.py::test_clicks
+# pytest -s tests/example_module/test_actions.py::test_dialogs_with_handler
 
 from playwright.sync_api import Page, expect
 import time
@@ -62,14 +62,21 @@ def test_clicks(page):
     # Click the top left corner
     page.get_by_title("Subscribe").click(position={ "x": 0, "y": 0})
     
-def test_dialogs(page):
+def test_dialogs_auto_dismissed(page):
     page.goto("https://letcode.in/alert")
-    
+    page.get_by_role("button", name="Simple Alert").click()
+    # Dialog is showing here, next click is not possible if dialog is not dismissed
+    page.get_by_role("button", name="Confirm Alert").click()
        
+def test_dialogs_with_handler(page):
+    page.goto("https://letcode.in")
+    page.get_by_role("link", name="Work-Space").click()
+    page.get_by_role("link", name="Dialog").click()
     
-
-
-
+    page.get_by_role("button", name="Simple Alert").click()
+    page.once("dialog", lambda dialog: dialog.dismiss())
+    page.get_by_role("button", name="Confirm Alert").click()
+   
 
 
 
