@@ -1,4 +1,4 @@
-# opleiding-playwright-python
+# Opleiding-playwright-python
 
 
 ### Setup:
@@ -156,13 +156,21 @@ Trace viewer:
 playwright show-trace tests/playwright/traces/module_b/trace_example.zip
 ```
 
+---
 
-
-
-
+### Reports:
 
 ```Bash
+# Install pytest-html
+pip install pytest-html
 
-pytest tests/standalone_test_scripts/tests/test_example.py
+# Run tests and generate an HTML report
+pytest --html=report.html
+
+# Install pytest-json-report
+pip install pytest-json-report
+
+# Run tests and generate a JSON report
+pytest --json-report --json-report-file=report.json
 
 ```

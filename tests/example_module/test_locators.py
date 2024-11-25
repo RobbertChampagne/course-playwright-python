@@ -1,4 +1,7 @@
-# pytest -s tests/example_module/test_locators.py::test_trigger_action
+# pytest -s tests/example_module/test_locators.py::test_locating_elements
+# pytest tests/example_module/test_locators.py --html=report.html
+
+# pytest -s tests/example_module/test_locators.py::test_locating_elements --json-report --json-report-file=report.json
 
 import re
 from playwright.sync_api import Page, expect
@@ -12,9 +15,10 @@ def test_locating_elements(page):
     
 def test_locate_by_role(page):
     page.goto("https://playwright.dev/")
+    page.get_by_text("Node.jsNode.jsPythonJava.NET").hover()
     
     # <a role="button" class="navbar__link">Python</a>
-    page.get_by_role("button", name="Python").click()
+    page.get_by_label("Main", exact=True).get_by_role("link", name="Python").click()
     page.get_by_role("banner").click()
     page.get_by_role("link", name="Get started").click()
     
@@ -35,7 +39,7 @@ def test_locate_by_text(page):
     page.goto("https://playwright.dev/")
     
     # <span>Playwright</span>
-    page.get_by_text("Playwright", exact=True).click()
+    page.get_by_text("Playwright", exact=True).nth(1).click()
     
 def test_locate_by_alt_text(page):
     page.goto("https://playwright.dev/")
