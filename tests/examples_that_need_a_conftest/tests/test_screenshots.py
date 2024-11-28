@@ -1,4 +1,4 @@
-# pytest tests/standalone_test_scripts/tests/test_screenshots.py
+# pytest tests/examples_that_need_a_conftest/tests/test_screenshots.py
 from playwright.sync_api import Page, expect
 import logging
 

@@ -13,10 +13,13 @@ from core.browser_utils import select_browser
 
 # Setup logging configuration
 setup_logging()
-logger = logging.getLogger("Standalone Scripts")
+logger = logging.getLogger("Conftest")
+
+# Dictionary to store video paths
+video_paths = {}
 
 @pytest.fixture(scope="function")
-def page_context(pytestconfig):
+def page_context(pytestconfig, request):
     # Log the start of the session
     logger.info("Starting session")
     
@@ -51,10 +54,16 @@ def page_context(pytestconfig):
         # Check if a device is specified and the browser supports mobile emulation
         if device and browser_name in ["chromium", "webkit"]:
             device_config = p.devices[device]
-            context = browser.new_context(**device_config)
-        else:
+            # context = browser.new_context(**device_config)
+            
+            # To record a video use this context else use the above context:
+            context = browser.new_context(**device_config, record_video_dir="videos/")
+        else: # Else use a normal browser context
             # Create a new browser context (similar to a new incognito window)
-            context = browser.new_context()
+            # context = browser.new_context()
+            
+            # To record a video use this context else use the above context:
+            context = browser.new_context(record_video_dir="videos/")
         
         logger.info(f"Launching {browser_name} browser")
         
@@ -71,6 +80,13 @@ def page_context(pytestconfig):
         context.close()
         browser.close()
         
+        # Retrieve the video path after closing the context
+        video_path = page.video.path()
+        logger.info(f"Video path: {video_path}")
+        
+        # Store the video path in the global dictionary
+        video_paths[request.node.nodeid] = video_path
+        
 # Hook to add a title to the HTML report
 @pytest.hookimpl(tryfirst=True)
 def pytest_html_report_title(report):
@@ -81,6 +97,7 @@ def pytest_html_report_title(report):
 # This decorator registers the function as a pytest hook implementation.
 # The hookwrapper=True argument indicates that this hook will wrap the execution of other hooks, 
 # allowing it to yield control and then continue execution after other hooks have run.
+# The pytest_runtest_makereport hook is by default called multiple times for each test phase: setup, call, and teardown. 
 @pytest.hookimpl(hookwrapper=True)
 # This defines the hook function pytest_runtest_makereport, which is called to create a test report for each test item.
 # item: The test item being reported on.
@@ -95,8 +112,9 @@ def pytest_runtest_makereport(item, call):
     # If it doesn't exist, it initializes extras as an empty list. 
     # extras is used to store additional information to be included in the HTML report.
     extras = getattr(report, "extras", [])
-    # This checks if the report is for the test function call phase (as opposed to setup or teardown).
-    if report.when == "call":
+    # This checks if the report is for the test function teardown phase.
+    if report.when == "teardown":
+        logger.info(f"Running pytest_runtest_makereport for {item.nodeid}")
         # This always adds a URL to the report. In this case, it adds "http://www.example.com/".
         extras.append(pytest_html.extras.url("http://www.example.com/"))
         # This checks if the test failed.
@@ -119,6 +137,17 @@ def pytest_runtest_makereport(item, call):
                 page.screenshot(path=screenshot_path)
                 # This adds the screenshot image to the extras list, which will be included in the HTML report.
                 extras.append(pytest_html.extras.image(screenshot_path))
+                
+                # When a video is recorded, the video file path is added to the extras list. 
+                # If no video is recorded, uncomment the following lines.
+                # Retrieve the video path from the global dictionary
+                video_path = video_paths.get(item.nodeid)
+                if video_path:
+                    logger.info(f"Adding video to report: {video_path}")
+                    extras.append(pytest_html.extras.url(video_path, name="Test Video"))
+                else:
+                    logger.warning(f"No video path found for {item.nodeid}")
+                
         # This assigns the extras list back to the report object, 
         # ensuring that the additional information is included in the HTML report.
         report.extras = extras

@@ -1,4 +1,4 @@
-# pytest tests/standalone_test_scripts/tests/test_example.py
+# pytest tests/examples_that_need_a_conftest/tests/test_example.py
 
 from playwright.sync_api import Page, expect
 import logging
@@ -25,7 +25,7 @@ def test_example(page_context):
     finally:
         # Stop tracing and save it to a file
         trace_name = 'example.zip'
-        trace_dir_name = 'standalone_test_scripts'
+        trace_dir_name = 'examples_that_need_a_conftest'
         save_trace(context, trace_dir_name, trace_name)
         
         # Log the location of the trace file
