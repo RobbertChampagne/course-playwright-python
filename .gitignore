@@ -166,4 +166,4 @@ cython_debug/
 
 traces/**/*
 pythonenv
-
+videos/**/*
