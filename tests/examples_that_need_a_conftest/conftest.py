@@ -84,7 +84,7 @@ def pytest_html_report_title(report):
 # allowing it to yield control and then continue execution after other hooks have run.
 # The pytest_runtest_makereport hook is by default called multiple times for each test phase: setup, call, and teardown. 
 @pytest.hookimpl(hookwrapper=True)
-# This defines the hook function pytest_runtest_makereport, which is called to create a test report for each test item.
+# Function which is called to create a report for each test item.
 # item: The test item being reported on.
 # call: The call object representing the test function call.
 def pytest_runtest_makereport(item, call):
@@ -93,8 +93,8 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     # This retrieves the test report object from the outcome of the test function call.
     report = outcome.get_result()
-    # This checks if the report is for the test function teardown phase.
-    if report.when == "teardown":
+    # This checks in what phase we are. (setup, call, and teardown)
+    if report.when == "call":
         logger.info(f"Running pytest_runtest_makereport for {item.nodeid}")
         # This retrieves the extras attribute from the report object, if it exists. 
         # If it doesn't exist, it initializes extras as an empty list. 
@@ -102,10 +102,10 @@ def pytest_runtest_makereport(item, call):
         extras = getattr(report, "extras", [])
         # This always adds a URL to the report. In this case, it adds "http://www.example.com/".
         extras.append(pytest_html.extras.url("http://www.example.com/"))
+        # This adds additional HTML content to the report if the test failed.
+        extras.append(pytest_html.extras.html("<div>Additional HTML</div>"))
         # This checks if the test failed.
         if report.failed:
-            # This adds additional HTML content to the report if the test failed.
-            extras.append(pytest_html.extras.html("<div>Additional HTML</div>"))
             # The item object represents the test item being reported on. 
             # It contains information about the test function, including its arguments. 
             # The funcargs attribute of the item object is a dictionary that maps argument names to their values. 

@@ -16,9 +16,3 @@ def test_screenshot_examples(page_context):
 
     # Fail:
     expect(page.get_by_role("img", name="123")).to_be_visible()
-
-
-
-
-
-    
