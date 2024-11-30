@@ -1,4 +1,4 @@
-# pytest -s tests/assignments/assignment4.py::test_download
+# pytest -s tests/assignments/assignment4_download.py::test_download
 
 # Assignment 4 (Downloads)
 

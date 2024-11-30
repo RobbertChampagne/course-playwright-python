@@ -2,7 +2,6 @@
 # pytest tests/example_module/test_reports.py --json-report --json-report-file=report.json
 # pytest tests/example_module/test_reports.py
 
-import re
 from playwright.sync_api import Page, expect
 
 def test_locating_elements(page):

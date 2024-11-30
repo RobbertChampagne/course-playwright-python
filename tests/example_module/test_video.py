@@ -57,7 +57,7 @@ def test_video(page):
             # - Checks if the test failed.
             # - The video_path check ensures that the video_path variable is not None.
             # - The os.path.exists(video_path) check ensures that the file actually exists on the filesystem.
-            if not test_failed and video_path and os.path.exists(video_path):
+            if test_failed == False and video_path and os.path.exists(video_path):
                 #  Removes the video file if the test passed.
                 os.remove(video_path)
                 logger.info(f"Video removed: {video_path}")

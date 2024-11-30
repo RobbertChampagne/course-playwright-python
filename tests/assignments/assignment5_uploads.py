@@ -1,4 +1,4 @@
-# pytest -s tests/assignments/assignment5.py::test_upload_no_click
+# pytest -s tests/assignments/assignment5_uploads.py::test_upload_no_click
 
 # Assignment 5 (Uploads)
 
