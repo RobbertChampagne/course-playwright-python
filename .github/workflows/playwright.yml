@@ -24,6 +24,8 @@ jobs:
     # Run the tests and retain traces on failure
     - name: Run your tests
       run: pytest tests/example_module/test_cicd.py --tracing=retain-on-failure
+      env:
+        HEADLESS: "true"
     # Upload the traces as artifacts if the job is not canceled
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
