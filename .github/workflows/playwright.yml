@@ -23,7 +23,7 @@ jobs:
       run: python -m playwright install --with-deps
     # Run the tests and retain traces on failure
     - name: Run your tests
-      run: pytest tests/example_module/test_cicd.py --tracing=retain-on-failure -headless
+      run: pytest tests/cicd
     # Upload the traces as artifacts if the job is not canceled
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
