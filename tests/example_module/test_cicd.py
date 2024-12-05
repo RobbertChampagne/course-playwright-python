@@ -14,6 +14,9 @@ def test_main_navigation(page):
 
         # Fail:
         expect(page.get_by_label("Switch between dark and light123")).to_be_visible()
+        
+    except Exception as e:
+        raise
     
     finally:
         save_trace(context, 'cicd', 'cicd_example.zip')
