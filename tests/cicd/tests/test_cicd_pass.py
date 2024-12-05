@@ -14,4 +14,4 @@ def test_cicd_pass(page_context):
         
     finally:
         # Stop tracing and save it to a file
-        save_trace(context, 'cicd', 'test_cicd_fail.zip')
+        save_trace(context, 'cicd', 'test_cicd_pass.zip')
