@@ -17,10 +17,10 @@ def test_locating_elements(page):
 
 def test_locating_elements_locator(page):
     page.goto("https://demo.playwright.dev/todomvc/#/")
-    page.locator('.new-todo').fill('Todo 1')
-    page.locator('.new-todo').press('Enter')
-    page.locator('.toggle').check()
-    page.locator('.destroy').click()
+    page.locator('').fill('Todo 1')
+    page.locator('').press('Enter')
+    page.locator('').check()
+    page.locator('').click()
     
 # Explanation:
 # Most of the time it will be possible to use the recommended built -in locators,

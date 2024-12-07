@@ -1,0 +1,9 @@
+{
+    "todos": [
+        { "title": "Buy groceries" },
+        { "title": "Clean the house" },
+        { "title": "Do laundry" },
+        { "title": "Wash the car" },
+        { "title": "Walk the dog" }
+    ]
+}

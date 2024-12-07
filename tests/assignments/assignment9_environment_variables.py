@@ -8,9 +8,10 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-url = ...
-selector = ...
-text = ...
+url = os.getenv('URL')
+selector = os.getenv('SELECTOR')
+text = os.getenv('TEXT')
 
 def test_env_assignment(page):
-    ...
+    page.goto(url)
+    expect(page.locator(selector)).to_contain_text(text)

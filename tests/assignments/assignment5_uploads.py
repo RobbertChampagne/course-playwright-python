@@ -1,4 +1,4 @@
-# pytest -s tests/assignments/assignment5_uploads.py::test_upload_no_click
+# pytest -s tests/assignments/assignment5_uploads.py::test_upload_no_click --headed
 
 # Assignment 5 (Uploads)
 
@@ -27,7 +27,7 @@ def test_upload_no_click(page):
     # Accept cookies
     page.get_by_text("Accept all & visit the site").click()
     
-    #page.locator("iframe[name=\"iframeResult\"]").content_frame.locator("#myFile").click()
+    page.locator("iframe[name=\"iframeResult\"]").content_frame.locator("#myFile").click()
     page.locator("iframe[name=\"iframeResult\"]").content_frame.locator("#myFile").set_input_files("./data/QA.jpg")
     page.locator("iframe[name=\"iframeResult\"]").content_frame.get_by_role("button", name="Submit").click()
 

@@ -27,12 +27,12 @@ def test_filter_and_locator_solution(page):
     page.get_by_placeholder("What needs to be done?").press("Enter")
     
     # Find the list item containing "Todo 1"
-    todo_item = page.locator("li").filter(has_text="Todo 1")
+    ...
 
     # Hover over the list item to make the delete button visible
-    todo_item.hover()
+    ...
 
     # Click the delete button
-    todo_item.locator("button.destroy").click()
+    ...
     
     
