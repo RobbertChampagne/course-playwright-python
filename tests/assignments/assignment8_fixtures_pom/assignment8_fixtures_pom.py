@@ -11,16 +11,16 @@ def before_each_after_each(page):
     todo_list = TodoList(page)
 
     # Go to the starting url before each test.
-    todo_list.navigate()
+    ...
     
     # Add a the first item to the todo list
-    todo_list.add_item(item)
+    ...
     
     # Run the tests.
     yield
     
     # Clean up.
-    todo_list.remove_all()
+    ...
     
 def test_pom(page):
     item_two = "Buy cookies"
@@ -28,16 +28,14 @@ def test_pom(page):
     todo_list = TodoList(page)
     
     # Navigate to the Todo page
-    todo_list.navigate()
+    ...
     
     # Add items to the todo list
-    todo_list.add_item(item_two)
-    todo_list.add_item(item_three)
+    ...
     
     # Verify that the new items are added to the list
-    todo_list.check_list(item_two)
-    todo_list.check_list(item_three)
+    ...
     
     # Remove a item from the list
-    todo_list.remove_item(item_two)
+    ...
   
