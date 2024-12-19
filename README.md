@@ -1,4 +1,4 @@
-# Course playwright Python
+# Course Playwright Python
 
 ### Learn Playwright and master web automation!
 This repository contains the course materials and exercises for a comprehensive Playwright course.<br>
